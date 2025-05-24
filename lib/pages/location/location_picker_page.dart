@@ -88,7 +88,7 @@ class _LocationPickerPageState extends State<LocationPickerPage> {
               right: 24,
               child: ElevatedButton(
                 onPressed: () async {
-                  final _ = Provider.of<DriveModel>(
+                  final drive = Provider.of<DriveModel>(
                     context,
                     listen: false,
                   );
