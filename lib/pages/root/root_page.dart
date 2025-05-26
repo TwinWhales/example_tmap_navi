@@ -29,7 +29,6 @@ class RootPage extends StatefulWidget {
 }
 
 class _RootPageState extends State<RootPage> {
-  bool _sdkInitialized = false;
   String _platformVersion = 'Unknown';
   String _initStatus = "Unknown";
   final _tmapUiSdkPlugin = TmapUiSdk();
@@ -75,7 +74,6 @@ class _RootPageState extends State<RootPage> {
   bool isInitWorking = false;
   // Platform messages are asynchronous, so we initialize in an async method.
   Future<void> initPlatformState() async {
-    if (_sdkInitialized) return;
     if (isInitWorking) {
       CommonToast.show('TmapUISDK 초기화 진행 중 입니다.');
       return;
@@ -116,7 +114,6 @@ class _RootPageState extends State<RootPage> {
       _platformVersion = platformVersion;
       _initStatus = initStatus;
     });
-    _sdkInitialized = true;
     isInitWorking = false;
   }
 
