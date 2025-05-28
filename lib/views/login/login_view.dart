@@ -1,25 +1,22 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart'; // ✅ 추가
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:go_router/go_router.dart';
 import '../auth/auth_service.dart';
 import '../auth/firebase_service.dart';
-import '../../viewmodels/point_provider.dart'; // ✅ provider import
-import '../../models/purchased_product.dart'; // ✅ fromMap 사용 위해 필요
+import '../../viewmodels/point_provider.dart';
+import '../../models/purchased_product.dart';
 
-class LoginView extends ConsumerStatefulWidget { // ✅ 변경
+class LoginView extends ConsumerStatefulWidget {
   const LoginView({super.key});
 
   @override
-  ConsumerState<LoginView> createState() => _LoginViewState(); // ✅ 변경
+  ConsumerState<LoginView> createState() => _LoginViewState();
 }
 
 class _LoginViewState extends ConsumerState<LoginView> {
   final AuthService _authService = AuthService();
   final FirebaseService _firebaseService = FirebaseService();
-
-  final String logoImageUrl =
-      "https://firebasestorage.googleapis.com/v0/b/cash-driving.firebasestorage.app/o/applogo.png?alt=media&token=b5fac182-01e9-4e1e-b65c-92800000772a";
 
   Future<void> _handleLogin() async {
     try {
@@ -101,7 +98,7 @@ class _LoginViewState extends ConsumerState<LoginView> {
                     ),
                     child: ClipOval(
                       child: Image.asset(
-                        "assets/images/applogo.png",
+                        "assets/images/logo.png",
                         fit: BoxFit.cover,
                         width: 160,
                         height: 160,
@@ -147,7 +144,7 @@ class _LoginViewState extends ConsumerState<LoginView> {
                           ),
                           padding: const EdgeInsets.all(2),
                           child: Image.asset(
-                            'assets/images/Google_2015_logo.svg.png',
+                            'assets/images/google.png',
                             fit: BoxFit.contain,
                           ),
                         ),
@@ -164,7 +161,6 @@ class _LoginViewState extends ConsumerState<LoginView> {
   }
 }
 
-// 곡선 배경용 클리퍼
 class _TopWaveClipper extends CustomClipper<Path> {
   @override
   Path getClip(Size size) {

@@ -13,7 +13,7 @@ import 'package:tmap_ui_sdk/config/marker/uisdk_marker_point.dart';
 import 'package:tmap_ui_sdk/event/data/sdkStatus/tmap_sdk_status.dart';
 import 'package:tmap_ui_sdk/tmap_ui_sdk.dart';
 import 'package:tmap_ui_sdk/tmap_ui_sdk_manager.dart';
-import 'package:example_tmap_navi/common/app_routes.dart';
+import 'package:example_tmap_navi/routes/app_routes.dart';
 import 'package:example_tmap_navi/models/car_config_model.dart';
 import 'package:example_tmap_navi/models/drive_model.dart';
 import 'package:example_tmap_navi/utils/location_utils.dart';

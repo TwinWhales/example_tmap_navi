@@ -5,10 +5,9 @@ import 'package:provider/provider.dart';
 import 'package:geolocator/geolocator.dart';                     // ← 추가
 import 'package:tmap_ui_sdk/route/data/route_point.dart';
 import 'package:example_tmap_navi/models/drive_model.dart';
-import 'package:example_tmap_navi/common/app_routes.dart';
+import 'package:example_tmap_navi/routes/app_routes.dart';
 import 'package:example_tmap_navi/utils/location_utils.dart';
 
-import '../../common/app_routes.dart';  // ← 변경된 Utils
 
 enum PickMode { start, destination }
 
