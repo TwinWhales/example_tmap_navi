@@ -91,7 +91,7 @@ class _RootPageState extends State<RootPage> {
           clientServiceName: "",
           clientAppVersion: "",
           clientID: "",
-          clientApiKey: "blrZ6wxVUMAx4eS4AUgm2tWIBtlWrI3c8N0j1f70",
+          clientApiKey: "ZL6ehYGTGJ96R4pUEzb5J8URphaOWjHP67Afpm3q",
           clientApCode: "",
           userKey: "",
           deviceKey: "",
