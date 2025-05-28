@@ -27,6 +27,7 @@ class DriveModel extends ChangeNotifier {
   void setSafeDriving(bool val) {
     safeDriving = val;
     // 이어주행 모드는 반대
+    // continueDriving = false;
     if (val) continueDriving = false;
     notifyListeners();
   }
@@ -49,26 +50,18 @@ class DriveModel extends ChangeNotifier {
 
     // ① 유저가 선택한 좌표가 있으면 그것, 없으면 기본값
     final source = _selectedSource ??
-        RoutePoint(
-          latitude: 37.564995,
-          longitude: 126.987025,
-          name: "TMOBI",
-        );
+        RoutePoint(latitude: 36.102305, longitude: 129.391364, name: "한동대학교 벧엘관");
     final destination = _selectedDestination ??
-        RoutePoint(
-          latitude: 37.566491,
-          longitude: 126.985146,
-          name: "SKT Tower",
-        );
+        RoutePoint(latitude: 36.082299, longitude: 129.398445, name: "하나로마트");
 
     // ② 나머지 옵션들
     final options = [PlanningOption.recommend, PlanningOption.shortest];
-    final wayPoints = <RoutePoint>[
-      RoutePoint(
-          latitude: 37.563343, longitude: 126.987702, name: "명동성당"),
-      RoutePoint(
-          latitude: 37.575672, longitude: 126.977039, name: "광화문"),
-    ];
+    // final wayPoints = <RoutePoint>[
+    //   RoutePoint(
+    //       latitude: 37.563343, longitude: 126.987702, name: "명동성당"),
+    //   RoutePoint(
+    //       latitude: 37.575672, longitude: 126.977039, name: "광화문"),
+    // ];
 
     return RouteRequestData(
       source: source,

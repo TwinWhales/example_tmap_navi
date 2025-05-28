@@ -11,9 +11,8 @@ class TmapExampleApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        // ChangeNotifierProvider로 바꿔야 notifyListeners()가 동작합니다.
-        ChangeNotifierProvider(create: (context) => CarConfigModel()),
-        ChangeNotifierProvider(create: (context) => DriveModel()),
+        Provider(create: (context) => CarConfigModel()),
+        Provider(create: (context) => DriveModel()),
       ],
       child: MaterialApp.router(
         title: 'Tmap UI SDK Example',

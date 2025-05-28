@@ -6,7 +6,9 @@ import 'package:geolocator/geolocator.dart';                     // ← 추가
 import 'package:tmap_ui_sdk/route/data/route_point.dart';
 import 'package:example_tmap_navi/models/drive_model.dart';
 import 'package:example_tmap_navi/common/app_routes.dart';
-import 'package:example_tmap_navi/utils/location_utils.dart';  // ← 변경된 Utils
+import 'package:example_tmap_navi/utils/location_utils.dart';
+
+import '../../common/app_routes.dart';  // ← 변경된 Utils
 
 enum PickMode { start, destination }
 
@@ -87,7 +89,7 @@ class _LocationPickerPageState extends State<LocationPickerPage> {
               left: 24,
               right: 24,
               child: ElevatedButton(
-                onPressed: () async {
+                onPressed: () {
                   final drive = Provider.of<DriveModel>(
                     context,
                     listen: false,
@@ -109,7 +111,8 @@ class _LocationPickerPageState extends State<LocationPickerPage> {
                         name: "목적지",
                       ),
                     );
-                    await Future.delayed(const Duration(milliseconds: 500));
+                    drive.setSafeDriving(false);
+
                     context.go(AppRoutes.drivePage);
                   }
                 },
