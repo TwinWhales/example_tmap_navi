@@ -24,12 +24,14 @@ GoRouter router() {
         builder: (_, __) => const LocationPickerPage(mode: PickMode.destination),
       ),
       GoRoute(
-        path: AppRoutes.rootPage,
-        builder: (context, state) => const RootPage(),
-      ),
-      GoRoute(
-        path: AppRoutes.drivePage,   // "/drive"
-        builder: (context, state) => const DrivePage(),
+          path: AppRoutes.rootPage,
+          builder: (context, state) => const RootPage(),
+          routes: [
+            GoRoute(
+              path: 'drive',
+              builder: (context, state) => const DrivePage(),
+            ),
+          ]
       ),
     ],
   );

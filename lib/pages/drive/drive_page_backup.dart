@@ -1,4 +1,3 @@
-import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
@@ -21,8 +20,6 @@ class DrivePage extends StatefulWidget {
 }
 
 class _DrivePageState extends State<DrivePage> {
-  int _currentSpeed = 0;
-  int _averageSpeed = 0;
 
   @override
   void initState() {
@@ -30,7 +27,6 @@ class _DrivePageState extends State<DrivePage> {
     TmapUISDKManager().startTmapSDKStatusStream(_onEvent);
     TmapUISDKManager().startMarkerStatusStream(_onMarkerEvent);
     TmapUISDKManager().startTmapDriveStatusStream(_onDriveStatus);
-    // ★ 기존 구독에 더해, 드라이브 가이드(속도 포함) 스트림 구독
     TmapUISDKManager().startTmapDriveGuideStream(_onDriveGuide);
   }
 
@@ -40,17 +36,7 @@ class _DrivePageState extends State<DrivePage> {
     }
   }
 
-  // ★ 수정: 가이드 이벤트에서 속도 업데이트
   void _onDriveGuide(TmapDriveGuide guide) {
-    setState(() {
-      _currentSpeed = guide.speedInKmPerHour;
-      _averageSpeed = guide.averageSpeed;
-    });
-
-    debugPrint(
-        '[onDriveGuide] Speed: ${guide.speedInKmPerHour} km/h, '
-            'Location(${guide.matchedLatitude},${guide.matchedLongitude})'
-    );
     debugPrint('[onDriveGuide] - matched Location(${guide.matchedLatitude},${guide.matchedLongitude}) ${guide.currentCourseAngle}');
     debugPrint('[onDriveGuide] - firstSDIInfo: ${guide.firstSDIInfo?.toJsonString()}');
     debugPrint('[onDriveGuide] - secondSDIInfo: ${guide.secondSDIInfo?.toJsonString()}');
@@ -61,14 +47,22 @@ class _DrivePageState extends State<DrivePage> {
   void _onEvent(TmapSDKStatusMsg sdkStatus) {
     switch (sdkStatus.sdkStatus) {
       case TmapSDKStatus.dismissReq:
-        if (context.mounted) context.go(AppRoutes.rootPage);
+      // SDK가 종료 되었으니 현재의 widget을 닫는다.
+        if (context.mounted) {
+          if (context.mounted) {
+            context.go(AppRoutes.rootPage);
+          }
+        }
         break;
       case TmapSDKStatus.continueDriveRequestedButNoSavedDriveInfo:
+      // 이어가기 요청을 하였으나 저장된 경로 정보가 없다. 현재의 widget을 닫는다.
         ContinueDriveUtil.alertContinueDrive(
           context,
           destination: sdkStatus.extraData,
           onGranted: () {
-            if (context.mounted) context.go(AppRoutes.rootPage);
+            if (context.mounted) {
+              context.go(AppRoutes.rootPage);
+            }
           },
         );
         break;
@@ -78,18 +72,15 @@ class _DrivePageState extends State<DrivePage> {
   }
 
   void _onMarkerEvent(MarkerStatus selectedMarker) {
-    debugPrint(
-        'MarkerSelected - ID:${selectedMarker.markerId} '
-            'type:${selectedMarker.markerType}'
-    );
+    var selectedMarkerId = selectedMarker.markerId;
+    var selectedMarkerType = selectedMarker.markerType;
+    debugPrint('MarkerSelected -  ID:$selectedMarkerId type:$selectedMarkerType');
   }
 
   @override
   void dispose() {
     TmapUISDKManager().stopTmapSDKStatusStream();
     TmapUISDKManager().stopMarkerStatusStream();
-    TmapUISDKManager().stopTmapDriveStatusStream();
-    TmapUISDKManager().stopTmapDriveGuideStream(); // ★ 구독 해제
     super.dispose();
   }
 
@@ -103,52 +94,30 @@ class _DrivePageState extends State<DrivePage> {
 
   @override
   Widget build(BuildContext context) {
-    // ★ 계산: 속도 ×2
-    final displayedSpeed = _currentSpeed * 2;
-
     return WillPopScope(
       onWillPop: () async {
-        await stopDriving();
+        stopDriving();
         return true;
       },
       child: Scaffold(
         backgroundColor: Theme.of(context).primaryColor,
         body: SafeArea(
           bottom: false,
-          child: Stack(
-            children: [
-              // 기존 지도 UI
-              Container(
-                color: Colors.white,
-                child: Consumer<DriveModel>(
-                  builder: (context, drive, child) =>
-                      TmapViewWidget(data: drive.routeRequestData),
-                ),
-              ),
-              // ★ 속도 표시 영역 (좌측 상단)
-              Positioned(
-                top: 16,
-                right: 16,
-                child: Container(
-                  padding: const EdgeInsets.symmetric(
-                      horizontal: 12, vertical: 8
-                  ),
-                  decoration: BoxDecoration(
-                    color: Colors.green,
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  child: Text(
-                    '속도: $displayedSpeed km/h',
-                    style: const TextStyle(
-                        color: Colors.white,
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold
-                    ),
-                  ),
-                ),
-              ),
-            ],
+          child: Container(
+            color: Colors.white,
+            child: Consumer<DriveModel>(
+              builder: (context, drive, child) =>
+                  TmapViewWidget(data: drive.routeRequestData),
+            ),
           ),
+        ),
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            // widget(native view)를 닫는다.
+            // SDK가 종료되면 event channel로 현재의 widget을 닫아달라는 요청이 전달될 것이므로, 여기서 Navigator.pop(context);을 수행하진 않는다.
+            stopDriving();
+          },
+          child: const Icon(Icons.close),
         ),
       ),
     );
