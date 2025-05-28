@@ -32,6 +32,28 @@ dependencies:
   geolocator: ^14.0.0
   google_maps_flutter: ^2.2.0
 
+
+  # 상태관리
+  flutter_riverpod: ^2.6.1 # riverpod, 상태 관리 플러그인 / provider의 상위버전
+
+
+  # Firebase
+  firebase_ui_auth: ^1.14.0
+  firebase_core: ^3.10.1
+  firebase_auth: ^5.4.1
+  firebase_storage: ^12.0.0
+  cloud_firestore: ^5.6.2
+
+  # Google Sign In
+  google_sign_in: ^6.2.1
+  google_sign_in_web: ^0.12.4
+
+  # Apple Login
+  sign_in_with_apple: ^6.1.4
+
+  # 그래프
+  fl_chart: ^0.65.0
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -45,6 +67,30 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - assets/images/marker/
+
+
+  fonts:
+    - family: Pretendard
+      fonts:
+        - asset: assets/fonts/PretendardVariable.ttf
+        - asset: assets/fonts/Pretendard-Thin.otf
+          weight: 100
+        - asset: assets/fonts/Pretendard-ExtraLight.otf
+          weight: 200
+        - asset: assets/fonts/Pretendard-Light.otf
+          weight: 300
+        - asset: assets/fonts/Pretendard-Regular.otf
+          weight: 400
+        - asset: assets/fonts/Pretendard-Medium.otf
+          weight: 500
+        - asset: assets/fonts/Pretendard-SemiBold.otf
+          weight: 600
+        - asset: assets/fonts/Pretendard-Bold.otf
+          weight: 700
+        - asset: assets/fonts/Pretendard-ExtraBold.otf
+          weight: 800
+        - asset: assets/fonts/Pretendard-Black.otf
+          weight: 900
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images
